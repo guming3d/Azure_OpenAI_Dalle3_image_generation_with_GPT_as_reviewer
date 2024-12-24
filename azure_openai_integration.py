@@ -1,3 +1,4 @@
+import base64
 import os
 import json
 import requests
@@ -22,17 +23,41 @@ def generate_image(prompt):
     return json.loads(result.model_dump_json())['data'][0]['url']
 
 def check_image_center(image_url):
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {API_KEY}"
-    }
-    data = {
-        "image_url": image_url,
-        "task": "check_center"
-    }
-    response = requests.post(GPT_4O_API_URL, headers=headers, json=data)
-    response.raise_for_status()
-    return response.json()["is_centered"]
+    # Encode the image from the URL
+    image_data = requests.get(image_url).content
+    encoded_image = base64.b64encode(image_data).decode('ascii')
+
+    # Prepare the chat prompt
+    chat_prompt = [
+        {
+            "role": "system",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "You are an AI assistant that helps people find information."
+                }
+            ]
+        }
+    ]
+
+    # Include speech result if speech is enabled
+    messages = chat_prompt
+
+    # Generate the completion
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=messages,
+        max_tokens=800,
+        temperature=0.7,
+        top_p=0.95,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None,
+        stream=False
+    )
+
+    # Assuming the completion contains the information about image centering
+    return completion.to_json().get("is_centered", False)
 
 def main():
     prompt = "A food dish on a table from a top view"
