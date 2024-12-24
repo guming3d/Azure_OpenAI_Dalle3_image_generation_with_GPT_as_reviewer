@@ -36,10 +36,23 @@ def check_image_center(image_url):
             "content": [
                 {
                     "type": "text",
-                    "text": "You are an AI assistant that helps people find information."
+                    "text": "You are an AI assistant that helps me check whether the dish of input image is in the center of the image. just return an json contains the \"is_centered\" field and value "
                 }
+                
+            ]
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {
+                           "url": f"data:image/jpeg;base64,{encoded_image}"
+                        }
+                    }
             ]
         }
+
     ]
 
     # Include speech result if speech is enabled
@@ -62,7 +75,7 @@ def check_image_center(image_url):
     return completion.to_json().get("is_centered", False)
 
 def main():
-    prompt = "A food dish on a table from a top view"
+    prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with "spicy Chinese Tomato Chicken" without any other items"
     while True:
         image_url = generate_image(prompt)
         if check_image_center(image_url):
