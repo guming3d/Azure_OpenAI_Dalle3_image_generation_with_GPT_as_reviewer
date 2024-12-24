@@ -2,17 +2,19 @@ import base64
 import os
 import json
 import requests
+from dotenv import load_dotenv
 from openai import AzureOpenAI
 import os
+
+load_dotenv()
 
 client = AzureOpenAI(
     api_version="2024-02-01",
     azure_endpoint="https://minggu-aoai.openai.azure.com/",
-    api_key=os.environ["AZURE_OPENAI_API_KEY"],
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
 )
-GPT_4O_API_URL = "https://<your-gpt4o-endpoint>"
-API_KEY = "<your-api-key>"
-OUTPUT_DIRECTORY = "<your-output-directory>"
+GPT_4O_API_URL = os.getenv("GPT_4O_API_URL")
+OUTPUT_DIRECTORY = os.getenv("OUTPUT_DIRECTORY")
 
 def generate_image(prompt):
     result = client.images.generate(
