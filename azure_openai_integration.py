@@ -79,12 +79,14 @@ def check_image_center(image_url):
 
 def main():
     prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with 'spicy Chinese Tomato Chicken' without any other items"
+    print(f"Output directory: {OUTPUT_DIRECTORY}")
     while True:
         image_url = generate_image(prompt)
         print(f"Checking if image is centered for URL: {image_url}")
         if check_image_center(image_url):
             image_data = requests.get(image_url).content
             image_path = os.path.join(OUTPUT_DIRECTORY, "generated_image.png")
+            print(f"Saving image to {image_path}")
             with open(image_path, "wb") as image_file:
                 image_file.write(image_data)
             print(f"Image saved to {image_path}")
