@@ -72,7 +72,8 @@ def check_image_center(image_url):
     )
 
     # Assuming the completion contains the information about image centering
-    return completion.to_json().get("is_centered", False)
+    completion_data = json.loads(completion.to_json())
+    return completion_data.get("is_centered", False)
 
 def main():
     prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with 'spicy Chinese Tomato Chicken' without any other items"
