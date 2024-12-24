@@ -75,7 +75,7 @@ def check_image_center(image_url):
     return completion.to_json().get("is_centered", False)
 
 def main():
-    prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with "spicy Chinese Tomato Chicken" without any other items"
+    prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with 'spicy Chinese Tomato Chicken' without any other items"
     while True:
         image_url = generate_image(prompt)
         if check_image_center(image_url):
