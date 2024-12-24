@@ -14,7 +14,7 @@ client = AzureOpenAI(
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
 )
 GPT_4O_API_URL = os.getenv("GPT_4O_API_URL")
-OUTPUT_DIRECTORY = os.getenv("OUTPUT_DIRECTORY")
+OUTPUT_DIRECTORY = os.path.join(os.getcwd(), os.getenv("OUTPUT_DIRECTORY", "output"))
 
 def generate_image(prompt):
     result = client.images.generate(
@@ -79,6 +79,8 @@ def check_image_center(image_url):
 
 def main():
     prompt = "food photography, Spicy Chinese Tomato Chicken, editorial photography, photography, from top view, only show plate with 'spicy Chinese Tomato Chicken' without any other items"
+    if not os.path.exists(OUTPUT_DIRECTORY):
+        os.makedirs(OUTPUT_DIRECTORY)
     print(f"Output directory: {OUTPUT_DIRECTORY}")
     while True:
         image_url = generate_image(prompt)
