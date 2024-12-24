@@ -28,7 +28,13 @@ def generate_image(prompt):
 
 def check_image_center(image_url):
     # Encode the image from the URL
-    image_data = requests.get(image_url).content
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()  # Raise an error for bad responses
+        image_data = response.content
+    except requests.exceptions.RequestException as e:
+        print(f"Error downloading image: {e}")
+        return None
     encoded_image = base64.b64encode(image_data).decode('ascii')
 
     # Prepare the chat prompt
@@ -86,7 +92,13 @@ def main():
         image_url = generate_image(prompt)
         print(f"Checking if image is centered for URL: {image_url}")
         if check_image_center(image_url):
-            image_data = requests.get(image_url).content
+            try:
+                response = requests.get(image_url)
+                response.raise_for_status()  # Raise an error for bad responses
+                image_data = response.content
+            except requests.exceptions.RequestException as e:
+                print(f"Error downloading image: {e}")
+                continue
             image_path = os.path.join(OUTPUT_DIRECTORY, "generated_image.png")
             print(f"Saving image to {image_path}")
             with open(image_path, "wb") as image_file:
