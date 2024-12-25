@@ -51,7 +51,7 @@ flowchart TD
     B --> C{Check Image Quality}
     C -->|True| D[Save Image to Output Directory]
     C -->|False| E[Save Image to _bad_images Directory]
-    E --> F[Generate New Image]
+    E --> F[Generate Image]
     F --> C
     D --> G[End]
 ```
