@@ -116,7 +116,7 @@ def check_image_center(image_url):
     # print(f"call gpt-4o with response:{completion}")
     
     # Assuming the completion contains the information about image centering
-    completion_content = completion.choices[0].message['content']
+    completion_content = completion.choices[0].message.content
     completion_data = json.loads(completion_content)
     result = completion_data.get("is_good", "False")
     reason = completion_data.get("reason", "Unknown")
