@@ -1,29 +1,29 @@
-# 图像生成与质量检查
+# Image Generation and Quality Check
 
-本项目使用 OpenAI 的 Azure API 生成图像并检查其质量。以下是如何运行此代码的步骤指南。
+This project uses OpenAI's Azure API to generate images and check their quality. Below is a step-by-step guide on how to run this code.
 
-## 环境准备
+## Environment Setup
 
-1. **克隆项目**：
+1. **Clone the project**:
    ```bash
    git clone <your-repo-url>
    cd <your-repo-directory>
    ```
 
-2. **创建虚拟环境**：
+2. **Create a virtual environment**:
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # Linux/MacOS
    # .\venv\Scripts\activate  # Windows
    ```
 
-3. **安装依赖**：
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **设置环境变量**：
-   - 创建一个 `.env` 文件，并添加以下内容：
+4. **Set environment variables**:
+   - Create a `.env` file and add the following content:
      ```
      AZURE_OPENAI_API_VERSION=<your-api-version>
      AZURE_OPENAI_API_ENDPOINT=<your-api-endpoint>
@@ -32,18 +32,18 @@
      OUTPUT_DIRECTORY=<your-output-directory>
      ```
 
-## 运行代码
+## Run the Code
 
-1. **执行主脚本**：
+1. **Execute the main script**:
    ```bash
    python image_generation.py
    ```
 
-2. **查看输出**：
-   - 生成的图像将保存在指定的输出目录中。
-   - 如果图像不符合标准，它将被保存到 `_bad_images` 子目录中。
+2. **Check the output**:
+   - The generated images will be saved in the specified output directory.
+   - If the images do not meet the standards, they will be saved in the `_bad_images` subdirectory.
 
-## 代码逻辑图
+## Code Logic Diagram
 
 ```mermaid
 flowchart TD
@@ -56,7 +56,7 @@ flowchart TD
     D --> G[End]
 ```
 
-## 注意事项
+## Notes
 
-- 确保所有环境变量都已正确设置。
-- 确保网络连接正常，以便访问 Azure OpenAI API。
+- Ensure all environment variables are set correctly.
+- Ensure a stable network connection to access the Azure OpenAI API.
