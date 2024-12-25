@@ -28,7 +28,7 @@ def generate_image(prompt):
     image_url = json.loads(result.model_dump_json())['data'][0]['url']
     return image_url
 
-def check_image_center(image_url):
+def check_image_quality(image_url):
     # Encode the image from the URL
     try:
         response = requests.get(image_url)
@@ -49,7 +49,7 @@ def check_image_center(image_url):
                     "type": "text",
                     "text": """
     You are an professional image editor that helps me check whether the content of the input image is follow three critical standard below:
-    - The dish of in the exact center of the image
+    - The dish of in the center of the image
     - The dish is complete and has space in both sides(up/down/left/right))
     - There is no other items arround the dish, just pure white and with no shadow 
 
@@ -57,7 +57,7 @@ def check_image_center(image_url):
     following is output format json example:
     {
     "is_good": "False",
-    "reason": "The dish is not in the center of the image"
+    "reason": ##description of the reason##,
     }
     """
                 }
@@ -75,7 +75,6 @@ def check_image_center(image_url):
                     }
             ]
         }
-
     ]
 
     # Include speech result if speech is enabled
@@ -86,26 +85,7 @@ def check_image_center(image_url):
         model="gpt-4o",
         messages=messages,
         max_tokens=300,
-        temperature=0.8,
-        top_p=0.8,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
-        stream=False
-    )
-
-    # print(f"call gpt-4o with response:{completion}")
-
-    # Assuming the completion contains the information about image centering
-    completion_data = json.loads(completion.choices[0].message.content)
-    messages = chat_prompt
-    
-    # Generate the completion
-    completion = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
-        max_tokens=300,
-        temperature=0.8,
+        temperature=0.6,
         top_p=0.8,
         frequency_penalty=0,
         presence_penalty=0,
@@ -122,33 +102,7 @@ def check_image_center(image_url):
     reason = completion_data.get("reason", "Unknown")
     print(f"Image check result: {result}")
     print(f"Reason: {reason}")    # Include speech result if speech is enabled
-    messages = chat_prompt
     
-    # Generate the completion
-    completion = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
-        max_tokens=300,
-        temperature=0.8,
-        top_p=0.8,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
-        stream=False
-    )
-    
-    # print(f"call gpt-4o with response:{completion}")
-    
-    # Assuming the completion contains the information about image centering
-    completion_content = completion.choices[0].message['content']
-    completion_data = json.loads(completion_content)
-    result = completion_data.get("is_good", "False")
-    reason = completion_data.get("reason", "Unknown")
-    print(f"Image check result: {result}")
-    print(f"Reason: {reason}")
-    reason = completion_data.get("reason", "Unknown")
-    print(f"Image check result: {result}")
-    print(f"Reason: {reason}")
     return result, reason 
 
 def main():
@@ -160,7 +114,7 @@ def main():
     while True:
         image_url = generate_image(prompt)
         # print(f"Checking if image is good quality with URL: {image_url}")
-        result, reason = check_image_center(image_url)
+        result, reason = check_image_quality(image_url)
         if result == "True":
             try:
                 response = requests.get(image_url)
