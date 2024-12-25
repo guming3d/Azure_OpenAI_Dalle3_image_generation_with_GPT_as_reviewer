@@ -98,7 +98,6 @@ def check_image_center(image_url):
 
     # Assuming the completion contains the information about image centering
     completion_data = json.loads(completion.choices[0].message.content)
-    completion_data = json.loads(completion_data)
     messages = chat_prompt
     
     # Generate the completion
