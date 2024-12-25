@@ -43,6 +43,19 @@
    - 生成的图像将保存在指定的输出目录中。
    - 如果图像不符合标准，它将被保存到 `_bad_images` 子目录中。
 
+## 代码逻辑图
+
+```mermaid
+flowchart TD
+    A[Start] --> B[Generate Image]
+    B --> C{Check Image Quality}
+    C -->|True| D[Save Image to Output Directory]
+    C -->|False| E[Save Image to _bad_images Directory]
+    E --> F[Generate New Image]
+    F --> C
+    D --> G[End]
+```
+
 ## 注意事项
 
 - 确保所有环境变量都已正确设置。
