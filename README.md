@@ -1,4 +1,4 @@
-# Image Generation and Quality Check
+# Azure Dalle3 Image Generation and Quality Check using GPT-4o
 
 This project uses OpenAI's Azure API to generate images with Dalle3 and employs GPT mode as an image checker to review the generated images. This is necessary because Dalle3 often does not follow instructions correctly. Below is a step-by-step guide on how to run this code.
 
