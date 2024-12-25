@@ -9,8 +9,8 @@ from datetime import datetime
 load_dotenv()
 
 client = AzureOpenAI(
-    api_version="2024-05-01-preview",
-    azure_endpoint="https://minggu-aoai.openai.azure.com/",
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_API_ENDPOINT"),
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
 )
 GPT_4O_API_URL = os.getenv("GPT_4O_API_URL")
