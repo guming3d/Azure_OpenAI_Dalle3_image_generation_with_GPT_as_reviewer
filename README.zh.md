@@ -47,13 +47,13 @@
 
 ```mermaid
 flowchart TD
-    A[Start] --> B[Generate Image]
-    B --> C{Check Image Quality}
-    C -->|True| D[Save Image to Output Directory]
-    C -->|False| E[Save Image to _bad_images Directory]
-    E --> F[Generate Image]
+    A[开始] --> B[生成图像]
+    B --> C{检查图像质量}
+    C -->|是| D[保存图像到输出目录]
+    C -->|否| E[保存图像到 _bad_images 目录]
+    E --> F[生成图像]
     F --> C
-    D --> G[End]
+    D --> G[结束]
 ```
 
 ## 注意事项
